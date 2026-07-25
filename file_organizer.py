@@ -16,8 +16,12 @@ def organize_by_extension(folder):
                 extensions[ext].append(file.name)
             else:
                 extensions[ext] = [file.name]
-    # Temporary test: verify extension dictionary
-    print(extensions)
+
+    for extension in extensions:
+        new_folder = folder / extension
+        new_folder.mkdir(exist_ok=True)
+        # Temporary test: display created folders
+        print(extension)
 
 
 def generate_report(stats, count):
