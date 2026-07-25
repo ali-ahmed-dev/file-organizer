@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def organize_by_extension(folder):
-
+    extensions = {}
     for file in folder.glob("*"):
         if file.is_file():
             ext = file.suffix.lower()
@@ -12,8 +12,12 @@ def organize_by_extension(folder):
                 ext = "no_extension"
             else:
                 ext = ext[1:]
-            # Temporary test: display detected extension
-            print(ext)
+            if ext in extensions:
+                extensions[ext].append(file.name)
+            else:
+                extensions[ext] = [file.name]
+    # Temporary test: verify extension dictionary
+    print(extensions)
 
 
 def generate_report(stats, count):
