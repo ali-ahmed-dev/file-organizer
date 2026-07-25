@@ -4,10 +4,16 @@ from pathlib import Path
 
 
 def organize_by_extension(folder):
+
     for file in folder.glob("*"):
         if file.is_file():
-            # Temporary test: display detected files
-            print(file)
+            ext = file.suffix.lower()
+            if not ext:
+                ext = "no_extension"
+            else:
+                ext = ext[1:]
+            # Temporary test: display detected extension
+            print(ext)
 
 
 def generate_report(stats, count):
