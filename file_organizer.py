@@ -4,7 +4,10 @@ from pathlib import Path
 
 
 def organize_by_extension(folder):
-    pass
+    for file in folder.glob("*"):
+        if file.is_file():
+            # Temporary test: display detected files
+            print(file)
 
 
 def generate_report(stats, count):
