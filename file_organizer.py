@@ -8,7 +8,12 @@ FOOTER = "=" * 50 + "\n                 END OF REPORT\n" + "=" * 50
 
 def organize_by_extension(folder):
     extensions = {}
-    stats = {}
+    stats = {
+        "total_files": 0,
+        "extensions_count": 0,
+        "files_by_extension": {}
+    }
+
     for file in folder.glob("*"):
         if file.is_file():
             ext = file.suffix.lower()
@@ -27,6 +32,12 @@ def organize_by_extension(folder):
         for file in files:
             target = new_folder / file.name
             shutil.move(file, target)
+
+    for files in extensions.values():
+        stats["total_files"] += len(files)
+    stats["extensions_count"] = len(extensions)
+    for ext, files in extensions.items():
+        stats["files_by_extension"][ext] = len(files)
     return stats
 
 
