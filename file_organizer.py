@@ -1,5 +1,5 @@
 from pathlib import Path
-# import shutil
+import shutil
 # import datetime
 
 
@@ -13,15 +13,16 @@ def organize_by_extension(folder):
             else:
                 ext = ext[1:]
             if ext in extensions:
-                extensions[ext].append(file.name)
+                extensions[ext].append(file)
             else:
-                extensions[ext] = [file.name]
+                extensions[ext] = [file]
 
-    for extension in extensions:
+    for extension, files in extensions.items():
         new_folder = folder / extension
         new_folder.mkdir(exist_ok=True)
-        # Temporary test: display created folders
-        print(extension)
+        for file in files:
+            target = new_folder / file.name
+            shutil.move(file, target)
 
 
 def generate_report(stats, count):
