@@ -2,9 +2,13 @@ from pathlib import Path
 import shutil
 # import datetime
 
+HEADER = "=" * 50 + "\n                 FILE ORGANIZER\n" + "=" * 50
+FOOTER = "=" * 50 + "\n                 END OF REPORT\n" + "=" * 50
+
 
 def organize_by_extension(folder):
     extensions = {}
+    stats = {}
     for file in folder.glob("*"):
         if file.is_file():
             ext = file.suffix.lower()
@@ -23,9 +27,10 @@ def organize_by_extension(folder):
         for file in files:
             target = new_folder / file.name
             shutil.move(file, target)
+    return stats
 
 
-def generate_report(stats, count):
+def generate_report(stats):
     pass
 
 
@@ -35,7 +40,8 @@ def main():
         folder_path = input("Enter the folder path to organize: ")
         folder = Path(folder_path)
         if folder.exists() and folder.is_dir():
-            organize_by_extension(folder)
+            stats = organize_by_extension(folder)
+            generate_report(stats)
         else:
             print("The folder does not exist or is not a directory.")
     except Exception as e:
