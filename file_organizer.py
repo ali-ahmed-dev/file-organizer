@@ -31,8 +31,18 @@ def organize_by_extension(folder):
     for extension, files in extensions.items():
         new_folder = folder / extension
         new_folder.mkdir(exist_ok=True)
+
         for file in files:
             target = new_folder / file.name
+
+            if target.exists():
+                copy_number = 1
+                while True:
+                    new_name = f"{file.stem} ({copy_number}){file.suffix}"
+                    target = new_folder / new_name
+                    if not target.exists():
+                        break
+                    copy_number += 1
             shutil.move(file, target)
 
     for files in extensions.values():
