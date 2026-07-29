@@ -5,6 +5,8 @@ import shutil
 HEADER = "=" * 50 + "\n                 FILE ORGANIZER\n" + "=" * 50
 FOOTER = "=" * 50 + "\n                 END OF REPORT\n" + "=" * 50
 
+REPORT_FILE = Path("file_organizer_report.txt")
+
 
 def organize_by_extension(folder):
     extensions = {}
@@ -58,6 +60,10 @@ def generate_report(stats):
     return "\n".join(report)
 
 
+def export_report(report_text):
+    REPORT_FILE.write_text(report_text, encoding="utf-8")
+
+
 def main():
     print("Welcome to the File Organizer Tool")
     try:
@@ -67,6 +73,10 @@ def main():
             stats = organize_by_extension(folder)
             report_text = generate_report(stats)
             print(report_text)
+            export_report(report_text)
+            print("\nReport exported successfully.")
+            print(f"File name : {REPORT_FILE.name}")
+            print(f"Location  : {REPORT_FILE.resolve()}")
         else:
             print("The folder does not exist or is not a directory.")
     except Exception as e:
