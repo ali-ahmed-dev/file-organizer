@@ -2,27 +2,20 @@ from pathlib import Path
 import shutil
 from datetime import datetime
 
-HEADER = "=" * 50 + "\n                 FILE ORGANIZER\n" + "=" * 50
-FOOTER = "=" * 50 + "\n                 END OF REPORT\n" + "=" * 50
+SEPARATOR = "=" * 50
+REPORT_FILENAME = "file_organizer_report.txt"
+REPORT_FILE = Path(REPORT_FILENAME)
 
-REPORT_FILE = Path("file_organizer_report.txt")
+HEADER = f"{SEPARATOR}\n                 FILE ORGANIZER\n{SEPARATOR}"
+FOOTER = f"{SEPARATOR}\n                 END OF REPORT\n{SEPARATOR}"
 
 
 def organize_by_extension(folder):
     extensions = {}
-    stats = {
-        "total_files": 0,
-        "extensions_count": 0,
-        "files_by_extension": {}
-    }
 
     for file in folder.glob("*"):
         if file.is_file():
-            ext = file.suffix.lower()
-            if not ext:
-                ext = "no_extension"
-            else:
-                ext = ext[1:]
+            ext = file.suffix.lower()[1:] if file.suffix else "no_extension"
             if ext in extensions:
                 extensions[ext].append(file)
             else:
@@ -45,30 +38,32 @@ def organize_by_extension(folder):
                     copy_number += 1
             shutil.move(file, target)
 
-    for files in extensions.values():
-        stats["total_files"] += len(files)
-    stats["extensions_count"] = len(extensions)
-    for ext, files in extensions.items():
-        stats["files_by_extension"][ext] = len(files)
+    stats = {
+        "total_files": sum(len(files) for files in extensions.values()),
+        "extensions_count": len(extensions),
+        "files_by_extension": {
+            ext: len(files)
+            for ext, files in extensions.items()
+        }
+    }
+
     return stats
 
 
 def generate_report(stats):
-    report = []
-
-    report.append(HEADER)
-    report.append("")
-    report.append(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    report.append("")
-    report.append(f"Total files: {stats['total_files']}")
-    report.append(f"Extensions count: {stats['extensions_count']}")
-    report.append("")
-    report.append("Files by extension:")
-    for ext, count in stats["files_by_extension"].items():
-        report.append(f"  {ext}: {count}")
-    report.append("")
-    report.append(FOOTER)
-
+    report = [
+        HEADER,
+        "",
+        f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        "",
+        f"Total files: {stats['total_files']}",
+        f"Extensions count: {stats['extensions_count']}",
+        "",
+        "Files by extension:",
+        *[f"  {ext}: {count}" for ext, count in stats["files_by_extension"].items()],
+        "",
+        FOOTER
+    ]
     return "\n".join(report)
 
 
