@@ -91,8 +91,14 @@ def main():
             print(f"Location  : {REPORT_FILE.resolve()}")
         else:
             print("The folder does not exist or is not a directory.")
+
+    except PermissionError:
+        print("Error: Permission denied. Please check folder permissions.")
+
+    except OSError:
+        print("Error: A file system error occurred.")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Unexpected error: {e}")
 
 
 if __name__ == "__main__":
