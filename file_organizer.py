@@ -1,6 +1,6 @@
 from pathlib import Path
 import shutil
-# import datetime
+from datetime import datetime
 
 HEADER = "=" * 50 + "\n                 FILE ORGANIZER\n" + "=" * 50
 FOOTER = "=" * 50 + "\n                 END OF REPORT\n" + "=" * 50
@@ -57,6 +57,8 @@ def generate_report(stats):
     report = []
 
     report.append(HEADER)
+    report.append("")
+    report.append(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     report.append("")
     report.append(f"Total files: {stats['total_files']}")
     report.append(f"Extensions count: {stats['extensions_count']}")
