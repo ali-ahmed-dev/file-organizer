@@ -9,7 +9,7 @@ This document outlines the planned improvements and future roadmap for **File Or
 
 These improvements focus on performance, reliability, and data safety.
 
-* [ ] Improve duplicate filename handling for directories containing a large number of files.
+* [✓] Improve duplicate filename handling for directories containing a large number of files.
 * [ ] Enhance file operation error handling to provide more detailed feedback during move operations.
 * [ ] Add timestamp-based report filenames to prevent overwriting previous reports.
 * [ ] Improve input validation before processing target directories.
@@ -53,8 +53,8 @@ Larger features planned for future major versions.
 
 | Version                  | Status     |
 | ------------------------ | ---------- |
-| **Current Release**      | **v1.0.1** |
-| **Next Planned Release** | **v2.0.0** |
+| **Current Release**      | **v1.0.2** |
+| **Next Planned Release** | **v1.1.0** |
 
 ---
 

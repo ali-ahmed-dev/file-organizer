@@ -24,21 +24,22 @@ def organize_by_extension(folder):
     for extension, files in extensions.items():
         new_folder = folder / extension
         new_folder.mkdir(exist_ok=True)
+        existing_names = {f.name for f in new_folder.iterdir() if f.is_file()}
 
         for file in files:
             target = new_folder / file.name
 
-            if target.exists():
+            if target.exists() or target.name in existing_names:
                 copy_number = 1
-                while True:
-                    new_name = f"{file.stem} ({copy_number}){file.suffix}"
-                    target = new_folder / new_name
-                    if not target.exists():
-                        break
+                new_name = f"{file.stem} ({copy_number}){file.suffix}"
+                while new_name in existing_names:
                     copy_number += 1
+                    new_name = f"{file.stem} ({copy_number}){file.suffix}"
+                target = new_folder / new_name
             try:
                 shutil.copy2(file, target)
                 file.unlink()
+                existing_names.add(target.name)
             except Exception as e:
                 print(f"Warning: Could not move {file.name}. Error: {e}")
                 continue
