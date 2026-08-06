@@ -1,5 +1,5 @@
-from pathlib import Path
 import shutil
+from pathlib import Path
 from datetime import datetime
 
 SEPARATOR = "=" * 50
@@ -36,8 +36,12 @@ def organize_by_extension(folder):
                     if not target.exists():
                         break
                     copy_number += 1
-            shutil.move(file, target)
-
+            try:
+                shutil.copy2(file, target)
+                file.unlink()
+            except Exception as e:
+                print(f"Warning: Could not move {file.name}. Error: {e}")
+                continue
     stats = {
         "total_files": sum(len(files) for files in extensions.values()),
         "extensions_count": len(extensions),

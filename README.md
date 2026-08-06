@@ -80,8 +80,9 @@ When prompted, enter the full path of the folder you want to organize.
     file-organizer/
     │
     ├── file_organizer.py
-    └── README.md
-
+    ├── README.md
+    ├── LICENSE
+    └── .gitignore
 ---
 
 ## Future Improvements
@@ -103,7 +104,7 @@ This project is licensed under the MIT License.
 
 ## Version
 
-v1.0.0
+v1.0.1
 
 ---
 

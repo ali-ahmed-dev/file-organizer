@@ -53,7 +53,7 @@ Larger features planned for future major versions.
 
 | Version                  | Status     |
 | ------------------------ | ---------- |
-| **Current Release**      | **v1.0.0** |
+| **Current Release**      | **v1.0.1** |
 | **Next Planned Release** | **v2.0.0** |
 
 ---
